@@ -1,0 +1,136 @@
+[gd_scene load_steps=7 format=3 uid="uid://bxlccknbg52jn"]
+
+[ext_resource type="Texture2D" uid="uid://c1ts2rxd3tejr" path="res://assets/Splash movie/Timeline 1_01_00_10_10.jpg" id="1_s6fcp"]
+[ext_resource type="AudioStream" uid="uid://ci6i2mdtdadxe" path="res://assets/Splash movie/Plop   Sound effects.mp3" id="2_2ayaq"]
+[ext_resource type="VideoStream" path="res://assets/Splash movie/Kookos 3.ogv" id="3_qxf7i"]
+
+[sub_resource type="Animation" id="Animation_pwdvx"]
+resource_name = "Boot"
+length = 6.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/path = NodePath("../RichTextLabel2:visible_characters")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, -1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".:visible_characters")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, -1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = false
+tracks/2/path = NodePath("../RichTextLabel3:visible_characters")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, -1]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("../VideoStreamPlayer:stream:file")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [""]
+}
+
+[sub_resource type="Animation" id="Animation_iug4s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../VideoStreamPlayer:stream:file")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [""]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_t1hvw"]
+_data = {
+"Boot": SubResource("Animation_pwdvx"),
+"RESET": SubResource("Animation_iug4s")
+}
+
+[node name="StartUP" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("1_s6fcp")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+offset_left = 297.0
+offset_top = 283.0
+offset_right = 932.0
+offset_bottom = 488.0
+theme_override_colors/default_color = Color(0.709804, 0.494118, 0.027451, 1)
+theme_override_font_sizes/normal_font_size = 150
+bbcode_enabled = true
+text = "Thinking"
+fit_content = true
+tab_size = 5
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+offset_left = 1002.0
+offset_top = 285.0
+offset_right = 1635.0
+offset_bottom = 500.0
+theme_override_colors/default_color = Color(0.709804, 0.494118, 0.027451, 1)
+theme_override_font_sizes/normal_font_size = 150
+text = "monkey"
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+offset_left = 300.0
+offset_top = 590.0
+offset_right = 1633.0
+offset_bottom = 864.0
+theme_override_colors/default_color = Color(0.709804, 0.494118, 0.027451, 1)
+theme_override_font_sizes/normal_font_size = 200
+text = "PRODUCTION"
+visible_characters = 0
+visible_ratio = 0.0
+
+[node name="Plop sound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_2ayaq")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../RichTextLabel")
+libraries = {
+"": SubResource("AnimationLibrary_t1hvw")
+}
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+stream = ExtResource("3_qxf7i")
+autoplay = true
