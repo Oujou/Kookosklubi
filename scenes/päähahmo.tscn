@@ -102,3 +102,6 @@ frame_progress = 0.346546
 [node name="Päähahmo_collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_m7qtb")
+
+[node name="bulletSpawnPoint" type="Marker2D" parent="."]
+position = Vector2(11, 0)
