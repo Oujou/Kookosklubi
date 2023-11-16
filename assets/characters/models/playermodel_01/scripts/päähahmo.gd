@@ -1,8 +1,8 @@
 extends CharacterBody2D
-
-
+@onready var screensize = get_viewport_rect().size
 const SPEED = 150.0
 const JUMP_VELOCITY = -400.0
+
 @export var luodit : PackedScene = preload("res://scenes/luodit.tscn")
 
 @onready var sprite = $Päähahmo_model
