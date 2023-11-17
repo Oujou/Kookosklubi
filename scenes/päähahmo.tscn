@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://brfg48m3bt86v"]
+[gd_scene load_steps=16 format=3 uid="uid://brfg48m3bt86v"]
 
 [ext_resource type="Script" path="res://assets/characters/models/playermodel_01/scripts/päähahmo.gd" id="1_s0dba"]
 [ext_resource type="Texture2D" uid="uid://c4x4pvxyh7e5u" path="res://assets/characters/models/playermodel_01/graphics/playermodel_placeholder.png" id="2_2y8mo"]
@@ -89,6 +89,9 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m7qtb"]
 size = Vector2(20, 28)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_apton"]
+size = Vector2(20, 28)
+
 [node name="Päähahmo_container" type="CharacterBody2D"]
 script = ExtResource("1_s0dba")
 
@@ -105,3 +108,14 @@ shape = SubResource("RectangleShape2D_m7qtb")
 
 [node name="bulletSpawnPoint" type="Marker2D" parent="."]
 position = Vector2(12, 0)
+
+[node name="LadderCheck" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LadderCheck"]
+position = Vector2(0, 2)
+shape = SubResource("RectangleShape2D_apton")
+
+[connection signal="body_entered" from="LadderCheck" to="." method="_on_ladder_check_body_entered"]
+[connection signal="body_exited" from="LadderCheck" to="." method="_on_ladder_check_body_exited"]

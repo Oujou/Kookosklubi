@@ -55,6 +55,7 @@ Shoot={
 2d_physics/layer_1="Enviroment"
 2d_physics/layer_2="Hitbox"
 2d_physics/layer_3="Projectile"
+2d_physics/layer_4="Ladder"
 
 [rendering]
 
