@@ -17,7 +17,7 @@ const JUMP_VELOCITY = -400.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _physics_process(delta):
-	#print(on_ladder)
+	print(on_ladder)
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -40,10 +40,34 @@ func _physics_process(delta):
 		
 	if Input.is_action_just_pressed("Shoot"):
 		shoot()
+		
+	
+	if on_ladder == true:
+		if Input.is_action_just_pressed("Up"):
+			gravity = 0
+			position.y -= 1
+		elif Input.is_action_just_pressed("Down"):
+			if not is_on_floor():
+				gravity = 0
+				position.y += 1
+		if Input.is_action_just_pressed("Left") and not Input.is_action_just_pressed("Right"):
+			position.x -= 1
+		elif Input.is_action_just_pressed("Right") and not Input.is_action_just_pressed("Left"):
+			position.x +=1
+	else:
+		gravity = 980
+		on_ladder = false
 
 	move_and_slide()
 	
 	update_animations(direction)
+
+
+func should_climb_ladder() -> bool:
+	if on_ladder and (Input.is_action_pressed("Up") or Input.is_action_pressed("Down")):
+		return true
+	else:
+		return false
 
 func update_animations(direction):
 	if is_on_floor():
@@ -67,8 +91,8 @@ func shoot():
 	b.transform = $bulletSpawnPoint.global_transform
 
 
-func _on_ladder_check_body_entered(body):
+func _on_ladder_check_body_entered(_body):
 	on_ladder = true
 
-func _on_ladder_check_body_exited(body):
+func _on_ladder_check_body_exited(_body):
 	on_ladder = false
