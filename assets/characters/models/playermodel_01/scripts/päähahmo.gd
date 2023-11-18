@@ -1,6 +1,9 @@
 extends CharacterBody2D
-@onready var screensize = get_viewport_rect().size
 @export var Area2d_Luoti : PackedScene = preload("res://scenes/area_2d_luoti.tscn")
+
+@onready var screensize = get_viewport_rect().size
+@onready var sprite = $Päähahmo_model
+@onready var luoti = $bulletSpawnPoint
 
 var on_ladder : bool = false
 
@@ -10,14 +13,10 @@ const SPEED = 150.0
 # How high main character can jump negative means upwards, positive downwards
 const JUMP_VELOCITY = -400.0
 
-@onready var sprite = $Päähahmo_model
-@onready var luoti = $bulletSpawnPoint
-
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 func _physics_process(delta):
-	print(on_ladder)
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -43,25 +42,23 @@ func _physics_process(delta):
 		
 	
 	if on_ladder == true:
-		if Input.is_action_just_pressed("Up"):
+		if Input.is_action_pressed("Up"):
 			gravity = 0
 			position.y -= 1
-		elif Input.is_action_just_pressed("Down"):
+		elif Input.is_action_pressed("Down"):
 			if not is_on_floor():
 				gravity = 0
 				position.y += 1
-		if Input.is_action_just_pressed("Left") and not Input.is_action_just_pressed("Right"):
+		if Input.is_action_pressed("Left") and not Input.is_action_pressed("Right"):
 			position.x -= 1
-		elif Input.is_action_just_pressed("Right") and not Input.is_action_just_pressed("Left"):
+		elif Input.is_action_pressed("Right") and not Input.is_action_pressed("Left"):
 			position.x +=1
 	else:
 		gravity = 980
 		on_ladder = false
 
 	move_and_slide()
-	
 	update_animations(direction)
-
 
 func should_climb_ladder() -> bool:
 	if on_ladder and (Input.is_action_pressed("Up") or Input.is_action_pressed("Down")):
