@@ -2,9 +2,13 @@ extends Area2D
 
 #Projectile speed
 var speed = 750
+var direction = 1
+
+func init(dir):
+	direction = dir
 
 func _physics_process(delta):
-	position += transform.x * speed * delta
+	position += transform.x * speed * delta * direction
 
 func _on_body_entered(body):
 	# If projectile enters into mobs categorized hitbox

@@ -97,17 +97,15 @@ script = ExtResource("1_s0dba")
 
 [node name="Päähahmo_model" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hgvn8")
-animation = &"Run_right"
+animation = &"Idle"
 autoplay = "Idle"
-frame = 3
-frame_progress = 0.346546
 
 [node name="Päähahmo_collision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
 shape = SubResource("RectangleShape2D_m7qtb")
 
 [node name="bulletSpawnPoint" type="Marker2D" parent="."]
-position = Vector2(12, 0)
+position = Vector2(19, 0)
 
 [node name="LadderCheck" type="Area2D" parent="."]
 collision_layer = 0
