@@ -21,8 +21,8 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y += gravity * delta
 
-	# Handle Jump.
-	if Input.is_action_just_pressed("Up"):
+	#Handle Jump.
+	if Input.is_action_just_pressed("Up") and on_ladder != true:
 		if is_on_floor():
 			velocity.y = JUMP_VELOCITY
 		
@@ -40,22 +40,20 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("Shoot"):
 		shoot()
 		
-	
 	if on_ladder == true:
+		gravity = 0
 		if Input.is_action_pressed("Up"):
-			gravity = 0
 			position.y -= 1
 		elif Input.is_action_pressed("Down"):
 			if not is_on_floor():
-				gravity = 0
 				position.y += 1
 		if Input.is_action_pressed("Left") and not Input.is_action_pressed("Right"):
 			position.x -= 1
 		elif Input.is_action_pressed("Right") and not Input.is_action_pressed("Left"):
 			position.x +=1
 	else:
-		gravity = 980
 		on_ladder = false
+		gravity = 980
 
 	move_and_slide()
 	update_animations(direction)
