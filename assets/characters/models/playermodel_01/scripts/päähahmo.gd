@@ -1,14 +1,17 @@
 extends CharacterBody2D
-@export var Area2d_Luoti : PackedScene = preload("res://scenes/area_2d_luoti.tscn")
 
 @onready var screensize = get_viewport_rect().size
 @onready var sprite = $Päähahmo_model
 @onready var luoti = $bulletSpawnPoint
-# Character speed
+
+@export var Area2d_Luoti : PackedScene = preload("res://scenes/area_2d_luoti.tscn")
 @export var SPEED = 150.0
-# How high main character can jump negative means upwards, positive downwards
 @export var JUMP_VELOCITY = -400.0
 @export var LADDER_SPEED = 2
+
+signal Player_Dead
+
+# Character speed
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var DEFAULT_GRAV = ProjectSettings.get_setting("physics/2d/default_gravity")
 var gravity = DEFAULT_GRAV
@@ -87,7 +90,7 @@ func handle_shoot():
 		# Spawn new scene from area_2d_luoti 
 		var b = Area2d_Luoti.instantiate()
 		b.init(current_direction)
-		owner.add_child(b)
+		get_parent().add_child(b)
 		# Move bullet spawnpoint to near our character which is set up in Päähahmo_container
 		b.transform = $bulletSpawnPoint.global_transform
 
@@ -96,3 +99,8 @@ func _on_ladder_check_body_entered(_body):
 
 func _on_ladder_check_body_exited(_body):
 	on_ladder = false
+
+
+func _on_area_2d_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
+	Player_Dead.emit()
+	pass # Replace with function body.
