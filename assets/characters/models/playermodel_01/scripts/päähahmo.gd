@@ -19,6 +19,9 @@ var current_direction = 1
 var on_ladder : bool = false
 
 func _physics_process(delta):
+	if Input.is_key_pressed(KEY_ESCAPE):
+		get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+	
 	var direction = Input.get_axis("Left", "Right")
 	if not is_on_floor(): velocity.y += gravity * delta # Add the gravity.
 	handle_jump()
