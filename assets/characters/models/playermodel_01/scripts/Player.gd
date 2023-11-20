@@ -108,7 +108,6 @@ func _on_ladder_check_body_entered(_body):
 func _on_ladder_check_body_exited(_body):
 	on_ladder = false
 
-func _on_area_2d_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	print(body.name)
+func _on_area_2d_body_shape_entered(_body_rid, body, _body_shape_index, _local_shape_index):
 	if body.name == "Hazard":
 		Player_Dead.emit()
