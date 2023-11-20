@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bi4bugrpkkps"]
+
+[ext_resource type="Texture2D" uid="uid://de42rqly3cvjq" path="res://assets/graphics/bullets/LuotiTilesetti.png" id="1_0horh"]
+
+[resource]
+atlas = ExtResource("1_0horh")
+region = Rect2(32, 32, 16, 16)

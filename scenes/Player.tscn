@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://brfg48m3bt86v"]
 
-[ext_resource type="Script" path="res://assets/characters/models/playermodel_01/scripts/päähahmo.gd" id="1_s0dba"]
+[ext_resource type="Script" path="res://assets/characters/models/playermodel_01/scripts/Player.gd" id="1_s0dba"]
 [ext_resource type="Texture2D" uid="uid://c4x4pvxyh7e5u" path="res://assets/characters/models/playermodel_01/graphics/playermodel_placeholder.png" id="2_2y8mo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0t7ri"]
@@ -86,45 +86,46 @@ animations = [{
 "speed": 15.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7qtb"]
-size = Vector2(20, 28)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jbc04"]
+radius = 5.0
+height = 28.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_apton"]
-size = Vector2(20, 28)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4gpai"]
+radius = 5.0
+height = 28.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5h18i"]
 size = Vector2(11, 26)
 
-[node name="Päähahmo_container" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 512
 script = ExtResource("1_s0dba")
 
-[node name="Päähahmo_model" type="AnimatedSprite2D" parent="."]
+[node name="Graphics" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_hgvn8")
 animation = &"Idle"
 autoplay = "Idle"
 
-[node name="Päähahmo_collision" type="CollisionShape2D" parent="."]
-visible = false
+[node name="PlayerCollider" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_m7qtb")
+shape = SubResource("CapsuleShape2D_jbc04")
 
 [node name="bulletSpawnPoint" type="Marker2D" parent="."]
-position = Vector2(19, 0)
 
 [node name="LadderCheck" type="Area2D" parent="."]
-visible = false
 collision_layer = 0
 collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LadderCheck"]
 position = Vector2(0, 2)
-shape = SubResource("RectangleShape2D_apton")
+shape = SubResource("CapsuleShape2D_4gpai")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 0
 collision_mask = 16
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+visible = false
 position = Vector2(-0.5, 3)
 shape = SubResource("RectangleShape2D_5h18i")
 

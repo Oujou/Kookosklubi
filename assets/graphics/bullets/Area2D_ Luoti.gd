@@ -1,31 +1,29 @@
-extends Area2D
+extends RigidBody2D
 
 #Projectile speed
-var speed = 750
-var direction = 1
+var speed = 250
 var BouncesLeft = 3
+var velocity : Vector2
 
 func init(dir):
-	direction = dir
+	velocity = dir * speed
+	add_to_group("Bullets")
 
 func _physics_process(delta):
-	position += transform.x * speed * delta * direction
-
-func _on_body_entered(body):
-	# If projectile enters into mobs categorized hitbox
-	if body.is_in_group("mobs"):
-		# Destroy projectile
-		body.queue_free()
-	# Tilesets are treated as bodies so if projectile hits tileset then destroy
-	if body.name == "TileMap" or body.name == "tilesetti2":
-		# Destroy projectile
-		if BouncesLeft < 1:
-			queue_free()
-		else:
-			BouncesLeft -= 1
-			direction *= -1
+	var collision = move_and_collide(velocity * delta)
+	if collision:
+		velocity = velocity.bounce(collision.get_normal())
+		if collision.get_collider().has_method("_bullet_hit"):
+			collision.get_collider()._bullet_hit()
+		look_at(transform.origin + velocity)
+	
+func Remove():
+	queue_free()
 
 # If projectile exits screen, destroy
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	# Destroy
 	queue_free()
+
+func _on_timer_timeout():
+	set_collision_mask_value(10, true)

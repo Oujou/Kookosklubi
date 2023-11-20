@@ -1,6 +1,6 @@
 extends Node
 
-@onready var PlayerContainer : PackedScene = preload("res://scenes/päähahmo.tscn")
+@onready var PlayerContainer : PackedScene
 @export var PlayerSpawn : Node2D
 @onready var start_new_button = $Control/StartNewButton
 
@@ -13,18 +13,11 @@ var GOD : bool = false
 
 func _ready():
 	mode = MODES.PLAY
-	PlayerContainer = preload("res://scenes/päähahmo.tscn")
+	PlayerContainer = preload("res://scenes/Player.tscn")
 	RespawnPlayer()
 
 func _input(event):
 	if event is InputEventKey and event.is_released():
-#		if (event.as_text() == "Shift+3"):
-#			if mode == MODES.CODE:
-#				mode = MODES.PLAY
-#				code = []
-#			else:
-#				mode = MODES.CODE
-#		if mode == MODES.CODE:
 		code.append(event.as_text())
 		if code.size() > 5:
 			code.pop_front()
@@ -35,7 +28,7 @@ func _input(event):
 			else:
 				GOD = true
 			code = []
-				
+
 func RespawnPlayer():
 	Player = PlayerContainer.instantiate()
 	Player.connect("Player_Dead", _on_player_dead)
@@ -45,7 +38,9 @@ func RespawnPlayer():
 func _on_player_dead():
 	if not GOD:
 		Player.queue_free()
+		get_tree().call_group("Bullets","Remove")
 		start_new_button.visible = true
+		start_new_button.grab_focus()
 
 func _on_start_new_button_button_up():
 	if not Player:

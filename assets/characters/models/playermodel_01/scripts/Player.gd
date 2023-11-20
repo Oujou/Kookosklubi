@@ -1,7 +1,7 @@
 extends CharacterBody2D
 
 @onready var screensize = get_viewport_rect().size
-@onready var sprite = $Päähahmo_model
+@onready var sprite = $Graphics
 @onready var luoti = $bulletSpawnPoint
 
 @export var Area2d_Luoti : PackedScene = preload("res://scenes/area_2d_luoti.tscn")
@@ -87,12 +87,17 @@ func update_animations(direction):
 			sprite.play("Run_right")
 	else:
 		pass
-
+		
+func _bullet_hit():
+	Player_Dead.emit()
+	
 func handle_shoot():
 	if Input.is_action_just_pressed("Shoot"):
 		# Spawn new scene from area_2d_luoti 
 		var b = Area2d_Luoti.instantiate()
-		b.init(current_direction)
+		var mpos = get_viewport().get_mouse_position()
+		var direction = mpos - global_position
+		b.init(direction.normalized())
 		get_parent().add_child(b)
 		# Move bullet spawnpoint to near our character which is set up in Päähahmo_container
 		b.transform = $bulletSpawnPoint.global_transform
@@ -103,7 +108,7 @@ func _on_ladder_check_body_entered(_body):
 func _on_ladder_check_body_exited(_body):
 	on_ladder = false
 
-
 func _on_area_2d_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
-	Player_Dead.emit()
-	pass # Replace with function body.
+	print(body.name)
+	if body.name == "Hazard":
+		Player_Dead.emit()
